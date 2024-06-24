@@ -1,7 +1,10 @@
+import 'package:blocproject/apiservices/functionsapi.dart';
+import 'package:blocproject/apiservices/moviemodel.dart';
 import 'package:flutter/material.dart';
 
 class ScrollItems extends StatelessWidget {
-  const ScrollItems({super.key});
+  final List<Movie> movie;
+  const ScrollItems({required this.movie, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +17,22 @@ class ScrollItems extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Tooltip(message: 'just tap',
+                  child: Tooltip(
+                    message: 'just tap',
                     child: InkWell(
-                      child: Container(
+                      child: SizedBox(
                         width: 150,
-                        color: Colors.brown,
                         height: 200,
+                        child: Image.network(
+                            filterQuality: FilterQuality.high,
+                            fit: BoxFit.cover,
+                            '${Keys.imagePath}${movie[index].posterPath}'),
                       ),
                     ),
                   ),
                 ),
-                const Text(
-                  'data',
+                Text(
+                  movie[index].title,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                 )
@@ -35,7 +42,7 @@ class ScrollItems extends StatelessWidget {
           separatorBuilder: (context, index) => const SizedBox(
                 width: 20,
               ),
-          itemCount: 10),
+          itemCount: movie.length),
     );
   }
 }

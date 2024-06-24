@@ -1,12 +1,14 @@
+import 'package:blocproject/apiservices/functionsapi.dart';
+import 'package:blocproject/model/bloc/movie_bloc.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
 
-  // late Future<List<Movie>> trendingMovies;
   @override
   Widget build(BuildContext context) {
+    MovieBloc movieBloc = context.read();
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -17,14 +19,16 @@ class SearchPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      ElevatedButton(onPressed: (){}, child: const Text('Hot')),
+                      ElevatedButton(
+                          onPressed: () {}, child: const Text('Hot')),
                       TextButton(onPressed: () {}, child: const Text('Rating')),
                       TextButton(onPressed: () {}, child: const Text('Latest'))
                     ],
                   ),
                   Row(
                     children: [
-                      ElevatedButton(onPressed: (){}, child: const Text('Drama')),
+                      ElevatedButton(
+                          onPressed: () {}, child: const Text('Drama')),
                       TextButton(
                           onPressed: () {}, child: const Text('Variety Show')),
                       TextButton(onPressed: () {}, child: const Text('Movie')),
@@ -33,7 +37,8 @@ class SearchPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      ElevatedButton(onPressed: (){}, child: const Text('All')),
+                      ElevatedButton(
+                          onPressed: () {}, child: const Text('All')),
                       TextButton(
                           onPressed: () {}, child: const Text('Western')),
                       TextButton(onPressed: () {}, child: const Text('India')),
@@ -43,7 +48,8 @@ class SearchPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      ElevatedButton(onPressed: (){}, child: const Text('All')),
+                      ElevatedButton(
+                          onPressed: () {}, child: const Text('All')),
                       TextButton(
                           onPressed: () {}, child: const Text('Romance')),
                       TextButton(
@@ -58,54 +64,52 @@ class SearchPage extends StatelessWidget {
             )),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: GridView.builder(
-              itemCount: 20,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 9 / 16,
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10),
-              itemBuilder: (context, index) {
-                return const Text('data');
-                // return FutureBuilder(
-                //   future: ,
-                //     // future: trendingMovies,
-                //     builder: (context, snapshot) {
-                //       if (snapshot.hasError) {
-                //         return Center(
-                //           child: Text(snapshot.error.toString()),
-                //         );
-                //       } else if (snapshot.hasData) {
-                //         // final data=snapshot.data;
-                //         return Column(
-                //           children: [
-                //             // InkWell(
-                //             //   onTap: () {
-                //             //     // Navigator.push(
-                //             //     //     context,
-                //             //     //     MaterialPageRoute(
-                //             //     //         builder: (context) => DetailsPage(
-                //             //     //             movie: snapshot.data![index])));
-                //             //   },
-                //             //   child: Image.network(
-                //             //       filterQuality: FilterQuality.high,
-                //             //       fit: BoxFit.cover,
-                //             //       'https://image.tmdb.org/t/p/w500/${snapshot.data![index].posterPath}'),
-                //             // ),
-                //             // Text(
-                //             //   snapshot.data![index].title,
-                //             //   overflow: TextOverflow.ellipsis,
-                //             //   textAlign: TextAlign.center,
-                //             // )
-                //           ],
-                //         );
-                //       } else {
-                //         return const Center(
-                //           child: CircularProgressIndicator(),
-                //         );
-                //       }
-                //     });
-              }),
+          child: BlocBuilder<MovieBloc, MovieState>(
+            builder: (context, state) {
+              if (state is MovieInitial) {
+                context.read<MovieBloc>().add(FetchTrendingMovies());
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is MovieLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is MovieLoaded) {
+                return GridView.builder(
+                    itemCount: movieBloc.topRated.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 9 / 16,
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10),
+                    itemBuilder: (context, index) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: SizedBox(
+                                height: 180,
+                                width: double.maxFinite,
+                                child: Image.network(
+                                    colorBlendMode: BlendMode.darken,
+                                    filterQuality: FilterQuality.high,
+                                    fit: BoxFit.cover,
+                                    "${Keys.imagePath}${movieBloc.trending[index].posterPath}"),
+                              )),
+                          Text(
+                            movieBloc.trending[index].title,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      );
+                    });
+              } else if (state is MovieError) {
+                return Text('Error: ${state.message}');
+              } else {
+                return Container();
+              }
+            },
+          ),
         ),
       ),
     );

@@ -38,6 +38,7 @@ dependencies:
   carousel_slider: ^4.2.1
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +50,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.9
+  freezed: ^2.5.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
