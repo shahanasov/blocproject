@@ -3,7 +3,7 @@ import 'package:blocproject/Business_Logic/bottomnav/bottompage_bloc.dart';
 import 'package:blocproject/screens/download.dart';
 import 'package:blocproject/screens/home.dart';
 import 'package:blocproject/screens/menu.dart';
-import 'package:blocproject/screens/search.dart';
+import 'package:blocproject/screens/searchresult.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +17,7 @@ List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[
 
 List<Widget> pages = <Widget>[
   const HomePage(),
-  const SearchPage(),
+   SearchResultPage(),
   const DownloadPage(),
   const MenuPage(),
 ];

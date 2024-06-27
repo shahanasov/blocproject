@@ -1,5 +1,6 @@
 import 'package:blocproject/apiservices/functionsapi.dart';
 import 'package:blocproject/model/bloc/movie_bloc.dart';
+import 'package:blocproject/widgets/details.dart';
 import 'package:blocproject/widgets/scrollitems.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MovieBloc movieBloc=context.read();
+    MovieBloc movieBloc = context.read();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -37,15 +38,21 @@ class HomePage extends StatelessWidget {
                     child: CarouselSlider.builder(
                       itemCount: movieBloc.trending.length,
                       itemBuilder: (context, index, indexpage) {
-                        return SizedBox(
-                          height: double.maxFinite,
-                          width: double.maxFinite,
-                          
-                          child: Image.network(
-                              colorBlendMode: BlendMode.darken,
-                              filterQuality: FilterQuality.high,
-                              fit: BoxFit.cover,
-                              "${Keys.imagePath}${movieBloc.trending[index].posterPath}"),
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => DetailsPage(
+                                    movie: movieBloc.trending[index])));
+                          },
+                          child: SizedBox(
+                            height: double.maxFinite,
+                            width: double.maxFinite,
+                            child: Image.network(
+                                colorBlendMode: BlendMode.darken,
+                                filterQuality: FilterQuality.high,
+                                fit: BoxFit.cover,
+                                "${Keys.imagePath}${movieBloc.trending[index].posterPath}"),
+                          ),
                         );
                       },
                       options: CarouselOptions(
@@ -82,7 +89,9 @@ class HomePage extends StatelessWidget {
                 } else if (state is MovieLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is MovieLoaded) {
-                  return ScrollItems(movie: movieBloc.topRated,);
+                  return ScrollItems(
+                    movie: movieBloc.topRated,
+                  );
                 } else if (state is MovieError) {
                   return Text('Error: ${state.message}');
                 } else {
@@ -97,7 +106,7 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.all(10.0),
               child: Text('Top Upcoming Movies'),
             ),
-               BlocBuilder<MovieBloc, MovieState>(
+            BlocBuilder<MovieBloc, MovieState>(
               builder: (context, state) {
                 if (state is MovieInitial) {
                   context.read<MovieBloc>().add(FetchUpcomingMovies());
@@ -105,7 +114,9 @@ class HomePage extends StatelessWidget {
                 } else if (state is MovieLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is MovieLoaded) {
-                  return ScrollItems(movie: movieBloc.upComing,);
+                  return ScrollItems(
+                    movie: movieBloc.upComing,
+                  );
                 } else if (state is MovieError) {
                   return Text('Error: ${state.message}');
                 } else {

@@ -1,5 +1,6 @@
 import 'package:blocproject/apiservices/functionsapi.dart';
 import 'package:blocproject/apiservices/moviemodel.dart';
+import 'package:blocproject/widgets/details.dart';
 import 'package:flutter/material.dart';
 
 class ScrollItems extends StatelessWidget {
@@ -20,6 +21,9 @@ class ScrollItems extends StatelessWidget {
                   child: Tooltip(
                     message: 'just tap',
                     child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailsPage(movie: movie[index])));
+                      },
                       child: SizedBox(
                         width: 150,
                         height: 200,

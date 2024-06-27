@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:blocproject/apiservices/functionsapi.dart';
 import 'package:blocproject/model/bloc/movie_bloc.dart';
+import 'package:blocproject/widgets/details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +11,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MovieBloc movieBloc = context.read();
+    MovieBloc movieBloc = MovieBloc(Api());
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -17,6 +20,7 @@ class SearchPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
               child: Column(
                 children: [
+                
                   Row(
                     children: [
                       ElevatedButton(
@@ -65,15 +69,18 @@ class SearchPage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: BlocBuilder<MovieBloc, MovieState>(
+            bloc: movieBloc,
             builder: (context, state) {
+              log(state.runtimeType.toString());
               if (state is MovieInitial) {
-                context.read<MovieBloc>().add(FetchTrendingMovies());
+                movieBloc.add(FetchTrendingMovies());
                 return const Center(child: CircularProgressIndicator());
               } else if (state is MovieLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is MovieLoaded) {
+                log(movieBloc.trending.length.toString());
                 return GridView.builder(
-                    itemCount: movieBloc.topRated.length,
+                    itemCount: movieBloc.trending.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 9 / 16,
@@ -84,17 +91,22 @@ class SearchPage extends StatelessWidget {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: SizedBox(
-                                height: 180,
-                                width: double.maxFinite,
-                                child: Image.network(
-                                    colorBlendMode: BlendMode.darken,
-                                    filterQuality: FilterQuality.high,
-                                    fit: BoxFit.cover,
-                                    "${Keys.imagePath}${movieBloc.trending[index].posterPath}"),
-                              )),
+                          InkWell(
+                            onTap: (){
+                               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailsPage(movie: movieBloc.trending[index])));
+                            },
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: SizedBox(
+                                  height: 180,
+                                  width: double.maxFinite,
+                                  child: Image.network(
+                                      colorBlendMode: BlendMode.darken,
+                                      filterQuality: FilterQuality.high,
+                                      fit: BoxFit.cover,
+                                      "${Keys.imagePath}${movieBloc.trending[index].posterPath}"),
+                                )),
+                          ),
                           Text(
                             movieBloc.trending[index].title,
                             textAlign: TextAlign.center,

@@ -1,3 +1,5 @@
+import 'package:blocproject/screens/historypage.dart';
+import 'package:blocproject/widgets/history.dart';
 import 'package:flutter/material.dart';
 
 class MenuPage extends StatelessWidget {
@@ -20,57 +22,64 @@ class MenuPage extends StatelessWidget {
                 ],
               ),
             )),
-        body: const SingleChildScrollView(
+        body:  SingleChildScrollView(
           child: Column(children: [
-            Divider(
+            const Divider(
               height: 10,
               thickness: 10,
               color: Colors.black45,
             ),
             ListTile(
-              title: Text('No History'),
+              title: const Text('History'),
+              trailing: IconButton(onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const HistoryPage()));
+              }, icon: const Icon(Icons.arrow_forward_ios),iconSize: 15,),
             ),
-            Divider(
+            const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: HistoryWidget(),
+            ),
+            const Divider(
               height: 10,
               thickness: 10,
               color: Colors.black45,
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.list_alt_outlined),
               title: Text('My List'),
               trailing: Icon(Icons.arrow_forward_ios_rounded),
             ),
-            Divider(
+            const Divider(
               height: 10,
               thickness: 10,
               color: Colors.black45,
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.language),
               title: Text('Language'),
               trailing: Icon(Icons.arrow_forward_ios_rounded),
             ),
-            Divider(
+            const Divider(
               height: 10,
               thickness: 10,
               color: Colors.black45,
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               trailing: Icon(Icons.arrow_forward_ios_rounded),
             ),
-            Divider(
+            const Divider(
               height: 10,
               thickness: 10,
               color: Colors.black45,
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.star_border_purple500_rounded),
               title: Text('Rate this app'),
               trailing: Icon(Icons.arrow_forward_ios_rounded),
             ),
-            Divider(
+            const Divider(
               height: 10,
               thickness: 10,
               color: Colors.black45,

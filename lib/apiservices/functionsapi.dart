@@ -13,10 +13,10 @@ class Api{
 
  Future<List<Movie>> gettrendingMovies()async{
   final response = await http.get(Uri.parse(_trendingMovies));
-  //200 means if everything is fine 
+   
   if(response.statusCode==200){
     final decoded=json.decode(response.body)['results'] as List;
-    // print(decoded);
+    
     return decoded.map((movie) => Movie.fromJson(movie)).toList();
   }else{
     throw Exception('error');
@@ -51,11 +51,11 @@ Future<List<Movie>> searchMovies(String query) async {
     final response = await http.get(Uri.parse(searchUrl));
     if (response.statusCode == 200) {
       final decoded = json.decode(response.body)['results'] as List;
+      // print(decoded);
       return decoded.map((film) => Movie.fromJson(film)).toList();
     } else {
       throw Exception('Failed to load search results');
     }
   }
-
-
+  
 }
