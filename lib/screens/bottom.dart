@@ -35,9 +35,9 @@ class BottomBar extends StatelessWidget {
             child: pages.elementAt(state.tabIndex),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Colors.brown,
+            selectedItemColor: const Color.fromARGB(255, 248, 249, 249),
             showUnselectedLabels: true,
-            unselectedItemColor: Colors.grey,
+            unselectedItemColor: const Color.fromARGB(255, 116, 113, 113),
             items: items,
             currentIndex: state.tabIndex,
             onTap: (index) {
@@ -50,34 +50,3 @@ class BottomBar extends StatelessWidget {
     );
   }
 }
-// class BottomBar extends StatefulWidget {
-//   const BottomBar({super.key});
-
-//   @override
-//   State<BottomBar> createState() => _BottomBarState();
-// }
-
-// class _BottomBarState extends State<BottomBar> {
-//   int selectedIndex = 0;
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       bottomNavigationBar: BottomNavigationBar(
-//           currentIndex: selectedIndex,
-//           onTap: (index) {
-//             setState(() {
-//               selectedIndex = index;
-//             });
-//           },
-//           selectedItemColor: Colors.white,
-//           unselectedItemColor: Colors.grey,
-//           showUnselectedLabels: true,
-//           items: const [
-
-//           ]),
-//       body: pages.elementAt(selectedIndex),
-//     );
-//   }
-// }

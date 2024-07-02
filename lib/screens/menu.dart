@@ -18,7 +18,9 @@ class MenuPage extends StatelessWidget {
                   const CircleAvatar(
                     radius: 50,
                   ),
-                  ElevatedButton(onPressed: () {}, child: const Text('Log in')),
+                  ElevatedButton(onPressed: () {
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  LoginPage()));
+                  }, child: const Text('Log in')),
                 ],
               ),
             )),
@@ -29,11 +31,19 @@ class MenuPage extends StatelessWidget {
               thickness: 10,
               color: Colors.black45,
             ),
-            ListTile(
-              title: const Text('History'),
-              trailing: IconButton(onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const HistoryPage()));
-              }, icon: const Icon(Icons.arrow_forward_ios),iconSize: 15,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                
+                   const Padding(
+                     padding: EdgeInsets.only(left: 15),
+                     child: Text('History'),
+                   ),
+                   IconButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  const HistoryPage()));
+                  }, icon: const Icon(Icons.arrow_forward_ios),iconSize: 15,),
+                
+              ],
             ),
             const Padding(
               padding: EdgeInsets.all(15.0),

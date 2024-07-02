@@ -1,4 +1,5 @@
 import 'package:blocproject/Business_Logic/bottomnav/bottompage_bloc.dart';
+import 'package:blocproject/Business_Logic/watchhistory/watchhistory_bloc.dart';
 import 'package:blocproject/Routs/generatorrount.dart';
 import 'package:blocproject/apiservices/functionsapi.dart';
 import 'package:blocproject/model/bloc/movie_bloc.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>  MovieBloc(api),
+        ),
+        BlocProvider(
+          create: (context) =>  WatchHistoryBloc(api: api),
         ),
       ],
       child: MaterialApp(

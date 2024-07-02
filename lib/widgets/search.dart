@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:blocproject/apiservices/functionsapi.dart';
 import 'package:blocproject/model/bloc/movie_bloc.dart';
@@ -71,14 +70,14 @@ class SearchPage extends StatelessWidget {
           child: BlocBuilder<MovieBloc, MovieState>(
             bloc: movieBloc,
             builder: (context, state) {
-              log(state.runtimeType.toString());
+              // log(state.runtimeType.toString());
               if (state is MovieInitial) {
                 movieBloc.add(FetchTrendingMovies());
                 return const Center(child: CircularProgressIndicator());
               } else if (state is MovieLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is MovieLoaded) {
-                log(movieBloc.trending.length.toString());
+                // log(movieBloc.trending.length.toString());
                 return GridView.builder(
                     itemCount: movieBloc.trending.length,
                     gridDelegate:

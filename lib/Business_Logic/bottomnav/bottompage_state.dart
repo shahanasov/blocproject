@@ -1,5 +1,6 @@
 part of 'bottompage_bloc.dart';
- class BottompageState {
+
+class BottompageState {
   final int tabIndex;
 
   const BottompageState({required this.tabIndex});

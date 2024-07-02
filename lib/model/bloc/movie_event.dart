@@ -15,3 +15,17 @@ class SearchMovies extends MovieEvent {
 
   const SearchMovies(this.query);
 }
+
+// class AuthenticateAndCreateList extends MovieEvent{
+//   final String listName;
+
+//   AuthenticateAndCreateList({required this.listName});
+  
+// }
+
+// class AddToWatchHistory extends MovieEvent{
+//   final int mediaId;
+
+//   AddToWatchHistory({required this.mediaId});
+  
+// }
