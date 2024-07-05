@@ -98,13 +98,13 @@ class Api {
         throw Exception('failed to create session id');
       }
     } on Exception catch (e) {
-      // print(e);
+      print(e);
       rethrow;
     }
   }
 
 Future<void> addToWatchlist(int mediaId, bool watchlist) async {
-    final url = 'https://api.themoviedb.org/3/account/${Keys.accountId}/watchlist?api_key=${Keys.apikey}&session_id=${Keys.sessionId}';
+    const url = 'https://api.themoviedb.org/3/account/${Keys.accountId}/watchlist?api_key=${Keys.apikey}&session_id=${Keys.sessionId}';
     
     final headers = {
       'Content-Type': 'application/json;charset=utf-8'
@@ -131,7 +131,7 @@ Future<void> addToWatchlist(int mediaId, bool watchlist) async {
   }
 
   Future<List<WatchHistory>> getWatchHistory() async {
-    final url = 'https://api.themoviedb.org/3/account/${Keys.accountId}/watchlist/movies?api_key=${Keys.apikey}&session_id=${Keys.sessionId}';
+    const url = 'https://api.themoviedb.org/3/account/${Keys.accountId}/watchlist/movies?api_key=${Keys.apikey}&session_id=${Keys.sessionId}';
 
     final response = await http.get(Uri.parse(url));
 
@@ -148,6 +148,35 @@ Future<void> addToWatchlist(int mediaId, bool watchlist) async {
       )).toList();
     } else {
       throw Exception('Failed to load watch history');
+    }
+  }
+
+
+
+  Future<void> removefromWatchlist(int mediaId, bool watchlist) async {
+    const url = 'https://api.themoviedb.org/3/account/${Keys.accountId}/watchlist?api_key=${Keys.apikey}&session_id=${Keys.sessionId}';
+    
+    final headers = {
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    
+    final body = jsonEncode({
+      'media_type': 'movie',
+      'media_id': mediaId,
+      'watchlist': watchlist,
+    });
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 201) {
+      print('Movie added to watchlist');
+    } else {
+      print('Failed to add movie to watchlist: ${response.statusCode}');
+      print('Response body: ${response.body}');
     }
   }
 }

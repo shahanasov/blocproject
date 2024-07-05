@@ -5,6 +5,7 @@ abstract class WatchHistoryState {}
 
 class WatchHistoryInitial extends WatchHistoryState {}
 class WatchHistoryAdded extends WatchHistoryState{}
+class WatchHistoryRemoved extends WatchHistoryState{}
 
 class WatchHistoryLoading extends WatchHistoryState {}
 

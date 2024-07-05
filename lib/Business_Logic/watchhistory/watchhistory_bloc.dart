@@ -12,6 +12,7 @@ class WatchHistoryBloc extends Bloc<WatchHistoryEvent, WatchHistoryState> {
   WatchHistoryBloc({required this.api}) : super(WatchHistoryInitial()) {
     on<AddToWatchlist>(addToWatchlist);
     on<LoadWatchHistory>(getWatchHistory);
+    on<RemoveFromWatchlist>(removeFromWatchlist);
   }
 
   FutureOr<void> addToWatchlist(
@@ -30,6 +31,17 @@ class WatchHistoryBloc extends Bloc<WatchHistoryEvent, WatchHistoryState> {
      try {
      final movies= await api.getWatchHistory();
       emit(WatchHistoryLoaded(movies));
+    } catch (e) {
+      emit(WatchHistoryError(e.toString()));
+    }
+  }
+
+
+
+  FutureOr<void> removeFromWatchlist(RemoveFromWatchlist event, Emitter<WatchHistoryState> emit)async {
+    try {
+      await api.removefromWatchlist(event.mediaId, false);
+      emit(WatchHistoryAdded());
     } catch (e) {
       emit(WatchHistoryError(e.toString()));
     }

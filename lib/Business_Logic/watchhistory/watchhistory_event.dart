@@ -12,3 +12,9 @@ class AddToWatchlist extends WatchHistoryEvent {
   AddToWatchlist(this.mediaId);
 }
 
+class RemoveFromWatchlist extends WatchHistoryEvent{
+  final int mediaId;
+
+  RemoveFromWatchlist(this.mediaId);
+}
+

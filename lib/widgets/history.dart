@@ -1,5 +1,7 @@
 import 'package:blocproject/Business_Logic/watchhistory/watchhistory_bloc.dart';
 import 'package:blocproject/apiservices/functionsapi.dart';
+import 'package:blocproject/apiservices/moviemodel.dart';
+import 'package:blocproject/widgets/details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +35,7 @@ class HistoryWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
                             onTap: () {
-                              // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailsPage(movie: movie[index])));
+                              // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailsPage(movie: watchHistory[index] as Movie)));
                             },
                             child: Container(
                               color: Colors.brown,
@@ -64,7 +66,7 @@ class HistoryWidget extends StatelessWidget {
                   // movie.length
                   ));
         } else {
-          return SizedBox();
+          return const SizedBox();
         }
       },
     );
